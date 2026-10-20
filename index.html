@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1a">
+  <meta name="description" content="Madan Game Store — katalog informasi game dan koleksi akun.">
+  <title>Madan Game Store</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Madan Game Store beranda">
+      <span class="brand-mark">M</span>
+      <span class="brand-copy"><strong>MADAN</strong><small>GAME STORE</small></span>
+    </a>
+    <button id="admin-open" class="button button-ghost" type="button">⚙ Panel Admin</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="status-dot"></span> GAME COLLECTION • CATALOG</span>
+        <h1>Temukan koleksi<br><span>game favoritmu.</span></h1>
+        <p>Jelajahi katalog Madan Game Store. Lihat informasi, detail koleksi, dan harga yang tercantum.</p>
+        <a class="button button-primary" href="#catalog">Jelajahi Katalog <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="hero-emblem">M<span>✦</span></div>
+        <div class="floating-chip chip-one">GAME COLLECTION</div>
+        <div class="floating-chip chip-two">MADAN / 01</div>
+      </div>
+    </section>
+
+    <section class="catalog-section" id="catalog">
+      <div class="section-heading">
+        <div><span class="eyebrow">PILIHAN KATALOG</span><h2>Katalog game</h2></div>
+        <span class="result-count" id="result-count">0 item</span>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="search-input" type="search" placeholder="Cari nama, karakter, atau detail..." autocomplete="off">
+        </label>
+        <label class="filter-wrap">
+          <span class="sr-only">Filter game</span>
+          <select id="game-filter">
+            <option value="all">Semua game</option>
+            <option value="Genshin Impact">Genshin Impact</option>
+            <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+            <option value="Zenless Zone Zero">Zenless Zone Zero</option>
+            <option value="Honkai Impact 3rd">Honkai Impact 3rd</option>
+          </select>
+        </label>
+        <label class="filter-wrap">
+          <span class="sr-only">Urutkan katalog</span>
+          <select id="sort-filter">
+            <option value="newest">Terbaru</option>
+            <option value="price-low">Harga terendah</option>
+            <option value="price-high">Harga tertinggi</option>
+            <option value="name">Nama A–Z</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="category-row" id="category-row" aria-label="Kategori game">
+        <button class="category-pill active" data-category="all" type="button">Semua</button>
+        <button class="category-pill" data-category="Genshin Impact" type="button">Genshin Impact</button>
+        <button class="category-pill" data-category="Honkai: Star Rail" type="button">Honkai: Star Rail</button>
+        <button class="category-pill" data-category="Zenless Zone Zero" type="button">Zenless Zone Zero</button>
+        <button class="category-pill" data-category="Honkai Impact 3rd" type="button">Honkai Impact 3rd</button>
+      </div>
+
+      <div id="catalog-grid" class="catalog-grid" aria-live="polite"></div>
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">⌕</div><h3>Katalog tidak ditemukan</h3>
+        <p>Coba kata kunci atau filter yang berbeda.</p>
+        <button id="reset-filters" class="button button-ghost" type="button">Reset pencarian</button>
+      </div>
+    </section>
+
+    <section class="notice">
+      <span class="notice-icon">i</span>
+      <div><strong>Informasi katalog</strong><p>Harga dan detail di halaman ini merupakan informasi yang dimasukkan pengelola. Periksa aturan resmi setiap game sebelum melakukan transaksi atau pengalihan akun. Website ini tidak memproses pembayaran maupun transfer akun.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#"><span class="brand-mark">M</span><span class="brand-copy"><strong>MADAN</strong><small>GAME STORE</small></span></a>
+    <p>© <span id="year"></span> Madan Game Store. Situs katalog independen, bukan situs resmi penerbit game.</p>
+  </footer>
+
+  <!-- Panel admin demo: perubahan tersimpan di browser perangkat ini saja. -->
+  <div id="admin-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel">
+      <div class="modal-header">
+        <div><span class="eyebrow">PENGELOLAAN KATALOG</span><h2 id="admin-title">Panel Admin</h2></div>
+        <button id="admin-close" class="icon-button" type="button" aria-label="Tutup panel">✕</button>
+      </div>
+      <div class="admin-warning"><strong>Mode demo lokal</strong><p>Data yang kamu ubah tersimpan di browser/perangkat ini, bukan ke GitHub atau perangkat pengunjung lain. Panel ini bukan login admin yang aman untuk website publik.</p></div>
+
+      <form id="catalog-form" class="admin-form">
+        <input type="hidden" id="item-id">
+        <label>Nama item<input id="item-name" type="text" maxlength="80" required placeholder="Contoh: Koleksi akun petualangan"></label>
+        <label>Game
+          <select id="item-game" required>
+            <option value="Genshin Impact">Genshin Impact</option>
+            <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+            <option value="Zenless Zone Zero">Zenless Zone Zero</option>
+            <option value="Honkai Impact 3rd">Honkai Impact 3rd</option>
+          </select>
+        </label>
+        <label>Harga (Rp; 0 untuk “Hubungi pengelola”)<input id="item-price" type="number" min="0" step="1000" required placeholder="350000"></label>
+        <label>Status
+          <select id="item-status"><option value="Tersedia">Tersedia</option><option value="Dalam proses">Dalam proses</option><option value="Tidak tersedia">Tidak tersedia</option><option value="Informasi">Informasi</option></select>
+        </label>
+        <label>Detail singkat<textarea id="item-description" maxlength="260" rows="3" required placeholder="Tuliskan detail koleksi secara jujur, tanpa data login."></textarea></label>
+        <div class="form-actions">
+          <button class="button button-primary" type="submit" id="save-item">Simpan item</button>
+          <button class="button button-ghost hidden" type="button" id="cancel-edit">Batal edit</button>
+          <button class="button button-ghost" type="button" id="reset-demo">Pulihkan contoh</button>
+        </div>
+      </form>
+      <div class="admin-list-heading"><h3>Item katalog</h3><span id="admin-item-count">0 item</span></div>
+      <div id="admin-list" class="admin-list"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
